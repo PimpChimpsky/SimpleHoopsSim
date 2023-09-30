@@ -744,6 +744,3 @@ def LeagueGeneration(teamAmt, rosterAmt):
     global TeamRosterDataFrame
     TeamRosterDataFrame = pd.DataFrame(totalTeamRosters)    
     print(TeamRosterDataFrame)
-
-#   git config --global user.email "you@example.com"
-#   git config --global user.name "Your Name"
