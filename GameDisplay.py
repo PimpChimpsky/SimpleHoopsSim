@@ -7,6 +7,9 @@ WIDTH, HEIGHT = 1000, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Space Dodge")
 
+
+
+
 def main():
     run = True
     

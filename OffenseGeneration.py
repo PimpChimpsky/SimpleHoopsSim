@@ -10,25 +10,27 @@ def GetParameters(value, parameter_type, parameter):
 
 
 # generate offensive skill level
-def OffenseGeneration(height, weight, wingspanDifference):
+def OffenseGeneration(height, weight, wingspan, strength, vertical, footwork, speed, stamina):
     #set minimum and maximum skill level
     minLevel = 0
     maxLevel = 100   
     
     # run different skill functions
-    ThreePointSkill = ThreePointGeneration(height, wingspanDifference)
-    MidrangeSkill = MidRangeGeneration(height,wingspanDifference)
-    FreeThrowSkill = FreeThrowGeneration(height, wingspanDifference)
-    PostScoringSkill = PostScoringGeneration(height, wingspanDifference, weight)
+    ThreePointSkill = ThreePointGeneration(height, wingspan)
+    MidrangeSkill = MidRangeGeneration(height,wingspan)
+    FreeThrowSkill = FreeThrowGeneration(height, wingspan)
+    PostScoringSkill = PostScoringGeneration(height, wingspan, weight)
+    LayupSkill = LayupsGeneration(wingspan, speed, footwork)
+    FloaterSkill = FloaterGeneration(wingspan, speed, footwork)
+    DunkSkill = DunkGeneration(wingspan, strength, vertical, footwork)
     
-    offenseAvg = (ThreePointSkill + MidrangeSkill + FreeThrowSkill + PostScoringSkill) / (4)
+    offenseAvg = (ThreePointSkill + MidrangeSkill + FreeThrowSkill + PostScoringSkill + LayupSkill + FloaterSkill + DunkSkill) / (7)
     offenseAvg = np.round(offenseAvg).astype(int)
-    
-    offense = [offenseAvg, ThreePointSkill, MidrangeSkill, FreeThrowSkill, PostScoringSkill]
+    offense = [offenseAvg, ThreePointSkill, MidrangeSkill, FreeThrowSkill, PostScoringSkill, LayupSkill, FloaterSkill, DunkSkill]
     
     return offense
 
- 
+
  
 def ThreePointGeneration(height, wingspan):
     minLevel = 0
@@ -219,6 +221,181 @@ def PostScoringGeneration(height, wingspan, weight):
     if skill > maxLevel:
         skill = random.randint(95, 100)
     if skill < minLevel:
+        skill = random.randint(0, 10)
+        
+    return skill
+
+
+
+def LayupsGeneration(wingspan, speed, footwork):
+    minSkill = 0
+    maxSkill = 100
+    
+    skillParameters = {
+        "speedRange": {
+            (0,20): {"mean": 50, "sd": 10},
+            (21,40): {"mean": 60, "sd": 10},
+            (41,60): {"mean": 70, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 85, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        },
+        "wingspanRange": {
+            (-4, -1): {"mean": 75, "sd": 5},
+            (0, 3): {"mean": 80, "sd": 5},
+            (4, 5): {"mean": 85, "sd": 5},
+            (6, 8): {"mean": 90, "sd": 5},
+        },
+        "footworkRange": {
+            (0,20): {"mean": 50, "sd": 10},
+            (21,40): {"mean": 60, "sd": 10},
+            (41,60): {"mean": 70, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 85, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        }
+    }
+    
+    speedParameters = GetParameters(speed, "speedRange", skillParameters)
+    wingspanParameters = GetParameters(wingspan, "wingspanRange", skillParameters)
+    footworkParameters = GetParameters(footwork, "footworkRange", skillParameters)
+    
+    
+    combinedMean = speedParameters["mean"] + wingspanParameters["mean"] + footworkParameters["mean"]
+    combinedMean = combinedMean / 3
+    combinedSD = speedParameters["sd"] + wingspanParameters["sd"] + footworkParameters["sd"]
+    combinedSD = combinedSD / 3
+    
+    skill = np.random.normal(combinedMean, combinedSD)
+    skill = np.round(skill).astype(int)
+    
+    if skill > maxSkill:
+        skill = random.randint(95, 100)
+    if skill < minSkill:
+        skill = random.randint(0, 10)
+        
+    return skill
+
+
+def FloaterGeneration(wingspan, speed, footwork):
+    minSkill = 0
+    maxSkill = 100
+
+    skillParameters = {
+        "speedRange": {
+            (0,20): {"mean": 60, "sd": 10},
+            (21,40): {"mean": 65, "sd": 10},
+            (41,60): {"mean": 70, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 85, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        },
+        "wingspanRange": {
+            (-4, -1): {"mean": 75, "sd": 5},
+            (0, 3): {"mean": 80, "sd": 5},
+            (4, 5): {"mean": 85, "sd": 5},
+            (6, 8): {"mean": 90, "sd": 5},
+        },
+        "footworkRange": {
+            (0,20): {"mean": 50, "sd": 10},
+            (21,40): {"mean": 60, "sd": 10},
+            (41,60): {"mean": 70, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 85, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        }
+    }
+    
+    speedParameters = GetParameters(speed, "speedRange", skillParameters)
+    wingspanParameters = GetParameters(wingspan, "wingspanRange", skillParameters)
+    footworkParameters = GetParameters(footwork, "footworkRange", skillParameters)
+    
+    
+    combinedMean = speedParameters["mean"] + wingspanParameters["mean"] + footworkParameters["mean"]
+    combinedMean = combinedMean / 3
+    combinedSD = speedParameters["sd"] + wingspanParameters["sd"] + footworkParameters["sd"]
+    combinedSD = combinedSD / 3
+    
+    skill = np.random.normal(combinedMean, combinedSD)
+    skill = np.round(skill).astype(int)
+    
+    if skill > maxSkill:
+        skill = random.randint(95, 100)
+    if skill < minSkill:
+        skill = random.randint(0, 10)
+        
+    return skill
+
+
+
+def DunkGeneration(wingspan, strength, vertical, footwork):
+    minSkill = 0
+    maxSkill = 100
+    
+    skillParameters = {
+        "wingspanRange": {
+            (-4, -1): {"mean": 65, "sd": 5},
+            (0, 3): {"mean": 80, "sd": 5},
+            (4, 5): {"mean": 85, "sd": 5},
+            (6, 8): {"mean": 90, "sd": 5},
+        },
+        "strengthRange": {
+            (0,20): {"mean": 50, "sd": 10},
+            (21,40): {"mean": 60, "sd": 10},
+            (41,60): {"mean": 70, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 85, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        },
+        "verticalRange": {
+            (0,20): {"mean": 25, "sd": 10},
+            (21,40): {"mean": 45, "sd": 10},
+            (41,60): {"mean": 65, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 88, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        },
+        "footworkRange": {
+            (0,20): {"mean": 50, "sd": 10},
+            (21,40): {"mean": 60, "sd": 10},
+            (41,60): {"mean": 70, "sd": 5},
+            (61,70): {"mean": 75, "sd": 5},
+            (71,80): {"mean": 80, "sd": 5},
+            (81,90): {"mean": 85, "sd": 5},
+            (91,95): {"mean": 90, "sd": 5},
+            (96,100): {"mean": 95, "sd": 5},
+        }
+    }
+    
+    wingspanParameters = GetParameters(wingspan, "wingspanRange", skillParameters)
+    strengthParameters = GetParameters(strength, "strengthRange", skillParameters)
+    verticalParameters = GetParameters(vertical, "verticalRange", skillParameters)
+    footworkParameters = GetParameters(footwork, "footworkRange", skillParameters)
+    
+    
+    combinedMean = wingspanParameters["mean"] + strengthParameters["mean"] + verticalParameters["mean"] + footworkParameters["mean"]
+    combinedMean = combinedMean / 4
+    combinedSD = wingspanParameters["sd"] + strengthParameters["sd"] + verticalParameters["sd"] + footworkParameters["sd"]
+    combinedSD = combinedSD / 4
+    
+    skill = np.random.normal(combinedMean, combinedSD)
+    skill = np.round(skill).astype(int)
+    
+    if skill > maxSkill:
+        skill = random.randint(95, 100)
+    if skill < minSkill:
         skill = random.randint(0, 10)
         
     return skill

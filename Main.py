@@ -1,5 +1,5 @@
 # Imports
-import LeagueGeneration
+from LeagueGeneration import LeagueGeneration
 
 
 # Functions

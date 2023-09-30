@@ -696,7 +696,7 @@ def PlayerGeneration():
     stamina = StaminaGeneration(totalInches, weight)
     
     # Skills
-    offenseSkills = OffenseGeneration.OffenseGeneration(totalInches, weight, wingspanDifference)
+    offenseSkills = OffenseGeneration.OffenseGeneration(totalInches, weight, wingspanDifference, strength, vertical, footwork, speed, stamina)
     offense = int(offenseSkills[0])
     
     # Add basic characteristics and skill averages to PlayersDetails data frame
@@ -709,9 +709,13 @@ def PlayerGeneration():
     midrangeSkill = int(offenseSkills[2])
     freethrowSkill = int(offenseSkills[3])
     postScoringSkill = int(offenseSkills[4])
+    layupSkill = int(offenseSkills[5])
+    floaterSkill = int(offenseSkills[6])
+    dunkSkill = int(offenseSkills[7])
     # add advanced skills to PlayersAdvancedDetails data frame
     physicals = 0
-    PlayersAdvancedDetails.loc[len(PlayersAdvancedDetails)] = [name, physicals, height, weight, wingspan, strength, vertical, footwork, speed, stamina, offense, threePointSkill, midrangeSkill, freethrowSkill, postScoringSkill]
+    PlayersAdvancedDetails.loc[len(PlayersAdvancedDetails)] = [name, physicals, height, weight, wingspan, strength, vertical, footwork, speed, stamina, offense, threePointSkill, 
+                                                               midrangeSkill, freethrowSkill, postScoringSkill, layupSkill, floaterSkill, dunkSkill]
     
     return name
 
@@ -728,7 +732,8 @@ def LeagueGeneration(teamAmt, rosterAmt):
     global PlayersDetails
     PlayersDetails = pd.DataFrame(columns=["Player", "Height", "Weight", "Wingspan", "Offense"])
     global PlayersAdvancedDetails
-    PlayersAdvancedDetails = pd.DataFrame(columns=["Player", "Physicals", "Height", "Weight", "Wingspan", "Strength", "Vertical", "Footwork", "Speed", "Stamina", "Offense", "Three Point", "Midrange", "Free Throw", "Post Scoring"])
+    PlayersAdvancedDetails = pd.DataFrame(columns=["Player", "Physicals", "Height", "Weight", "Wingspan", "Strength", "Vertical", "Footwork", "Speed", "Stamina", "Offense", 
+                                                   "Three Point", "Midrange", "Free Throw", "Post Scoring", "Layups", "Floater", "Dunk"])
     # for loop that creates each team and its roster
     for num in range(teamAmt):
         TeamGeneration()
