@@ -1,5 +1,5 @@
 # Imports
-from LeagueGeneration import LeagueGeneration
+import LeagueGeneration
 
 
 # Functions
@@ -12,7 +12,6 @@ def startGame():
 
 
 # Main
-
 print("Welcome to Simple Hoops Sim where you can create your own basketball league and become the owner you've always wanted to be")
 
 startGame()
