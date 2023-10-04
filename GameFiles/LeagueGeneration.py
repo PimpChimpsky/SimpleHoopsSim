@@ -6,11 +6,12 @@ import pandas as pd
 import numpy as np
 
 import OffenseGeneration
+from OffenseGeneration import OffenseGeneration
 
 # LISTS
 
 # create lists for all of the randomized elements that are generated later
-firstNames = ["James" , 'Robert', 'John', "Michael", "David", "William", "Richard", "Joseph", "Thomas", "Chris", "Anthony", "Paul", "Kenneth", "Kevin", "George", "Jason", "Ryan", "Bruce",
+firstNames = ["James", 'Robert', 'John', "Michael", "David", "William", "Richard", "Joseph", "Thomas", "Chris", "Anthony", "Paul", "Kenneth", "Kevin", "George", "Jason", "Ryan", "Bruce",
               'Tyler', 'Jacob', 'Austin', 'Jordan', 'Brandon', 'Joshua', 'Andrew', 'Rafael', 'Peyton', 'Alex', 'Coby', 'Kobe', 'Bryan', 'Rocky', 'Shawn', 'Sean', 'Cody', 'Robby', 'Stephen',
               'Steven', 'Steve', 'Will', 'Phil', 'Nolan', 'Charles', 'Chris', 'Derick', 'Conor', 'Mason', 'Shaun', 'Emmitt', 'Tom', 'Bill', 'Cameron', 'Derek', 'Hugo', 'Daniel', 'Henry',
               'Jayden', 'Noah', 'Samuel', 'Mateo', 'Jack', 'Owen', 'Ethan', 'Levi', 'Ace', 'Van', 'Xavier', 'Dominic', 'Damian', 'Donovan', 'Jamal', 'James', 'Jimmy', 'Bobby', 'Jaylen',

@@ -2,6 +2,55 @@ import random
 import numpy as np
 import pandas as pd
 
+
+class OffensiveGeneration:
+    def __init__(self, height, weight, wingspan, strength, vertical, footwork, speed, stamina):
+        self.height = height
+        self.wingspan = wingspan
+        
+    def ThreePointGeneration(self, height, wingspan):
+        minLevel = 0
+        maxLevel = 100
+        
+        skillParameters = {
+            "heightRange": {
+                # height: 5'8 - 6'0
+                (68,72): {"mean": 80, "sd": 5},
+                # height: 6'1 - 6'6
+                (73,78): {"mean": 75, "sd": 6},
+                # height: 6'7 - 7'0
+                (79,84): {"mean": 65, "sd": 8},
+                # height: 7'1 - 7'6
+                (85,90): {"mean": 50, "sd": 10},
+            },
+            "wingspanRange": {
+                (-4, -1): {"mean": 85, "sd": 5},
+                (0, 3): {"mean": 75, "sd": 6},
+                (4, 5): {"mean": 65, "sd": 8},
+                (6, 8): {"mean": 50, "sd": 10},
+            }
+        } 
+        
+        heightParameters = GetParameters(height, "heightRange", skillParameters)
+        wingspanParameters = GetParameters(wingspan, "wingspanRange", skillParameters)
+        
+        combinedMean = heightParameters["mean"] + wingspanParameters["mean"]
+        combinedMean = combinedMean / 2
+        combinedSD = heightParameters["sd"] + wingspanParameters["sd"]
+        combinedSD = combinedSD / 2
+        
+        skill = np.random.normal(combinedMean, combinedSD)
+        skill = np.round(skill).astype(int)
+        
+        if skill > maxLevel:
+            skill = random.randint(95, 100)
+        if skill < minLevel:
+            skill = random.randint(0, 10)
+            
+        return skill
+        
+
+
 def GetParameters(value, parameter_type, parameter):
     # Look up the parameters based on the specified value and parameter type
     for value_range, params in parameter[parameter_type].items():
