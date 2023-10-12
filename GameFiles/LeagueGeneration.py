@@ -5,8 +5,9 @@ import random
 import pandas as pd
 import numpy as np
 
-import OffenseGeneration
-from OffenseGeneration import OffenseGeneration
+# import OffenseGeneration
+# from OffenseGeneration import OffenseGeneration
+from Offense import OffensiveGeneration
 
 # LISTS
 
@@ -697,7 +698,8 @@ def PlayerGeneration():
     stamina = StaminaGeneration(totalInches, weight)
     
     # Skills
-    offenseSkills = OffenseGeneration.OffenseGeneration(totalInches, weight, wingspanDifference, strength, vertical, footwork, speed, stamina)
+    # offenseSkills = offense.OffenseGeneration(totalInches, weight, wingspanDifference, strength, vertical, footwork, speed, stamina)
+    offenseSkills = OffensiveGeneration.OffenseGeneration(totalInches, weight, wingspanDifference, strength, vertical, footwork, speed, stamina)
     offense = int(offenseSkills[0])
     
     # Add basic characteristics and skill averages to PlayersDetails data frame
