@@ -1,0 +1,11 @@
+{
+  "skills": ["offense", "defense", "playmaking", "rebounding", "dribbling", "iq", "mentality", "physicals"],
+  "offense": ["3pt scoring", "midrange", "freethrow", "fade-away", "layups", "floater", "dunks", "post scoring", "flashy scoring"],
+  "defense": ["perimeter defense", "post defense", "steals", "blocks", "lateral quickness"],
+  "playmaking": ["pass accuracy", "pass iq", "alley-oop pass", "flashy passing"],
+  "rebounding": ["defensive rebounding", "offensive rebounding"],
+  "dribbling": ["ball control", "dribble quickness", "flashy dribbling"],
+  "iq": ["court vision", "defensive iq", "coach", "off-ball movement"],
+  "mentality": ["clutchness", "mentor", "rage"],
+  "physicals": ["height", "weight", "strength", "vertical", "footwork", "speed", "stamina"]
+}

@@ -1,5 +1,18 @@
-__pycache__
+# mac venv files
+bin
+include
+lib
+pyvenv.cfg
+
+# windows venv files
 Include
 Lib
 Scripts
 pyvenv.cfg
+
+# exclude all pycache
+**/__pycache__/*
+__pycache__/
+__pycache__/*
+/pycache
+/pycache/*
