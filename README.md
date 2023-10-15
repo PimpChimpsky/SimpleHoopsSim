@@ -18,5 +18,5 @@ pip install -e .
 Then, run the following command to start the server:
 
 ```bash
-python ./GameFiles/Main.py
+python main.py
 ```

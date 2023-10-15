@@ -31,5 +31,6 @@ def TeamGeneration():
     # add newly generated team to total team list
     totalTeamList.append(team)
 
-    print(team)
+    print(team) # TODO: fix error when generating too many teams (above 12 players or so)
+    
     return team

@@ -1,6 +1,0 @@
-README.md
-setup.py
-SimpleHoopsSim.egg-info/PKG-INFO
-SimpleHoopsSim.egg-info/SOURCES.txt
-SimpleHoopsSim.egg-info/dependency_links.txt
-SimpleHoopsSim.egg-info/top_level.txt

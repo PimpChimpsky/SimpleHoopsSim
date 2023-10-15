@@ -2,13 +2,13 @@ import random
 import numpy as np
 import json
 from pathlib import Path
+import pandas as pd
 
 
 parent_dir = Path(__file__).parent.parent
 
 
 def GetParameters(value, parameter_type, parameter):
-    # Look up the parameters based on the specified value and parameter type
     for value_range, params in parameter[parameter_type].items():
         if value_range[0] <= value <= value_range[1]:
             return params
@@ -91,9 +91,9 @@ def StrengthGeneration(height, weight):
         strength = np.random.randint(minStrength, maxStrength + 1)
 
     # Ensure skill falls within the specified min and max limits
-    strength = max(minStrength, min(maxStrength, strength))
+    skill = max(minStrength, min(maxStrength, strength))
 
-    return strength
+    return skill
 
 
 def VerticalGeneration(height, weight):
@@ -128,17 +128,21 @@ def VerticalGeneration(height, weight):
     heightParameters = GetParameters(height, "heightRange", skillParameters)
     weightParameters = GetParameters(weight, "weightRange", skillParameters)
 
-    # Calculate combined skill based on height and weight parameters
-    combinedMean = (heightParameters["mean"] + weightParameters["mean"]) / 2
-    combinedSD = (heightParameters["sd"] + weightParameters["sd"]) / 2
+    if heightParameters is not None and weightParameters is not None:
+        combinedMean = (heightParameters["mean"] + weightParameters["mean"]) / 2
+        combinedSD = (heightParameters["sd"] + weightParameters["sd"]) / 2
 
-    # Generate a random skill value within the specified range
-    skill = np.random.normal(combinedMean, combinedSD)
-    skill = np.round(skill).astype(int)
-
-    # Ensure skill falls within the specified min and max limits
-    skill = max(minSkill, min(maxSkill, skill))
-
+        skill = np.random.normal(combinedMean, combinedSD)
+        skill = np.round(skill).astype(int)
+    else:
+        # Handle the case where one of the parameters is not found
+        skill = random.randint(minSkill, maxSkill)
+    
+    if skill > maxSkill:
+        skill = random.randint(95, 100)
+    if skill < minSkill:
+        skill = random.randint(0, 15)
+        
     return skill
 
 

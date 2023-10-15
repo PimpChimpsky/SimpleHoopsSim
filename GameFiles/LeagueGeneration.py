@@ -1,8 +1,19 @@
 # This file is called upon to generate a whole league
 import pandas as pd
-from Offense import OffensiveGeneration
-from playerGenerator import PlayerNameGeneration, PlayerWeightAndHeightGeneration, StrengthGeneration, VerticalGeneration, FootworkGeneration, SpeedGeneration, StaminaGeneration
-from teamGenerator import TeamGeneration
+from GameFiles.Offense import OffensiveGeneration
+from GameFiles.playerGenerator import PlayerNameGeneration, PlayerWeightAndHeightGeneration, StrengthGeneration, VerticalGeneration, FootworkGeneration, SpeedGeneration, StaminaGeneration
+from GameFiles.teamGenerator import TeamGeneration
+import pandas as pd
+from pathlib import Path
+
+
+parent_dir = Path(__file__).parent.parent
+
+
+# Define global variables for Player details
+PlayersDetails = pd.DataFrame(columns=["Player", "Height", "Weight", "Wingspan", "Offense"])
+PlayersAdvancedDetails = pd.DataFrame(columns=["Player", "Physicals", "Height", "Weight", "Wingspan", "Strength", "Vertical", "Footwork", "Speed", "Stamina", "Offense",
+                                               "Three Point", "Midrange", "Free Throw", "Post Scoring", "Layups", "Floater", "Dunk"])
     
 
 def PlayerGeneration():
@@ -42,7 +53,6 @@ def PlayerGeneration():
     PlayersDetails.loc[len(PlayersDetails)] = [name, height, weight, wingspan, offense]
     
     
-    
     # extract advanced skills
     threePointSkill = int(offenseSkills[1])
     midrangeSkill = int(offenseSkills[2])
@@ -80,7 +90,9 @@ def LeagueGeneration(teamAmt, rosterAmt):
         
         totalTeamRosters.append({"Team": team, "Players": teamRoster})
         
-    # create a dataframe for all team roster to better contain this data and for better looking display of the rosters
+    # create a dataframe for all team roster to better contain this data and for better looking display of the rosters, then save it to /output/teamname.csv with the team name and teams roster
     global TeamRosterDataFrame
-    TeamRosterDataFrame = pd.DataFrame(totalTeamRosters)    
+    TeamRosterDataFrame = pd.DataFrame(totalTeamRosters)
+    TeamRosterDataFrame.to_csv(parent_dir / 'output' / 'teamrosters.csv', index=False)
+    
     print(TeamRosterDataFrame)
